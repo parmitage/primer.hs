@@ -1,0 +1,17 @@
+Name:                Primer
+Version:             0.1
+Synopsis:            Primer - a functional programming language you can learn in an afternoon
+Homepage:            http://phil.nullable.eu/
+License:             MIT
+License-file:        LICENSE
+Author:              Phil Armitage
+Maintainer:          philip.armitage@gmail.com
+Category:            Language
+Build-type:          Simple
+Cabal-version:       >=1.2
+Executable primer
+  Main-is: Main.hs
+  hs-source-dirs: src
+  Build-depends: base, array, haskell98
+  Build-tools: alex, happy
+  Other-Modules: Scanner, Parser
