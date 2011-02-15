@@ -56,10 +56,10 @@ tokens :-
   "as"                  { \s -> TAs }
   "at"                  { \s -> TAt }
   "::"                  { \s -> TCons }
-  "Head"                { \s -> THead }
-  "Tail"                { \s -> TTail }
-  "Show"                { \s -> TShow }
-  "Type"                { \s -> TType }
+  "head"                { \s -> THead }
+  "tail"                { \s -> TTail }
+  "show"                { \s -> TShow }
+  "type"                { \s -> TType }
   "length"		        { \s -> TLength }
   @string 	       	    { \s -> TStringLiteral (init (tail s)) }
   @char                 { \s -> TCharLiteral (head (init (tail s))) }

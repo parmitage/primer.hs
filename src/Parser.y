@@ -52,6 +52,11 @@ ident                   { TIdent $$ }
 ']'                     { TRSquare }
 ';'                     { TSemicolon }
 ','                     { TComma }
+"head"                  { THead }
+"tail"                  { TTail }
+"show"                  { TShow }
+"type"                  { TType }
+"length"		        { TLength }
 
 %nonassoc "else"
 %left '=' "let" "val" "in" '(' ')' "not" '~'
@@ -66,8 +71,8 @@ ident                   { TIdent $$ }
 %%
 
 Program : 
-Expression ';'                                        { [$1] }
-| Expression ';' Program                              { $1 : $3 }
+Expression                                            { [$1] }
+| Expression Program                                  { $1 : $2 }
 
 Expression :
 integer                                               { PriInteger $1 }
@@ -100,6 +105,10 @@ integer                                               { PriInteger $1 }
 | Expression "mod" Expression                         { PriBinaryOperator Mod $1 $3}
 | Expression "++" Expression                          { PriBinaryOperator Append $1 $3}
 | Expression ".." Expression                          { PriBinaryOperator Range $1 $3}
+| "head" '(' Expression ')'                           { PriHead $3 }
+| "tail" '(' Expression ')'                           { PriTail $3 }
+| "show" '(' Expression ')'                           { PriShow $3 }
+| "length" '(' Expression ')'                         { PriLength $3 }
 | '-' Expression %prec UMINUS                         { PriUnaryOperator Neg $2 }
 | '[' List ']'                                        { PriList $2 }
 
