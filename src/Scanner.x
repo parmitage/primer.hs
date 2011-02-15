@@ -117,9 +117,4 @@ data Token =
      TFloatLiteral Float     |
      TIdent String
 	deriving (Eq,Show)
-
---main = do
---  s <- getContents
---  print (alexScanTokens s)
-
 }

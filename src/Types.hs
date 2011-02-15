@@ -30,7 +30,6 @@ data Expression =
   | PriIs Expression Expression
   | PriCast Expression Expression
   | PriDef Expression Expression
-  | PriNop
 
 instance Show Expression where
    show (PriSymbol s)      = show s
@@ -39,7 +38,7 @@ instance Show Expression where
    show (PriChar c)        = show c
    show (PriBoolean b)     = show b
    show (PriString s)      = show s
-   show (PriList l)        = show (intersperse (PriString ", ") l)
+   show (PriList l)        = show l
    show (PriLambda p b)    = show "#<lambda>"
    show (PriClosure p b e) = show "#<closure>"
    show _                  = show "#<builtin>"
