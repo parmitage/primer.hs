@@ -36,6 +36,8 @@ unaryOp Not (PriBoolean x) = (PriBoolean (not x))
 unaryOp Neg (PriInteger x) = (PriInteger (negate x))
 unaryOp Neg (PriDecimal x) = (PriDecimal (negate x))
 
+binaryOp Eq x y = PriBoolean(x == y)
+binaryOp Ne x y = PriBoolean(not $ x == y)
 binaryOp Add (PriInteger x) (PriInteger y) = PriInteger(x + y)
 binaryOp Add (PriInteger x) (PriDecimal y) = PriDecimal(fromIntegral x + y)
 binaryOp Add (PriDecimal x) (PriInteger y) = PriDecimal(x + fromIntegral y)
@@ -53,8 +55,6 @@ binaryOp Div (PriInteger x) (PriDecimal y) = PriDecimal(fromIntegral x / y)
 binaryOp Div (PriDecimal x) (PriInteger y) = PriDecimal(x / fromIntegral y)
 binaryOp Div (PriDecimal x) (PriDecimal y) = PriDecimal(x / y)
 binaryOp Mod (PriInteger x) (PriInteger y) = PriInteger(x `mod` y)
-binaryOp Eq x y = PriBoolean(x == y)
-binaryOp Ne x y = PriBoolean(not $ x == y)
 binaryOp Lt (PriInteger x) (PriInteger y) = PriBoolean(x < y)
 binaryOp Lt (PriDecimal x) (PriDecimal y) = PriBoolean(x < y)
 binaryOp Lt (PriInteger x) (PriDecimal y) = PriBoolean(fromIntegral x < y)
@@ -172,29 +172,32 @@ condition _ env = error "if: type mismatch"
 
 topLevel = []
 
-repl env (x:xs) = do
+reader env (x:xs) = do
   case x of
-       PriVal s e -> repl ((PriDef s e) : env) xs
+       PriVal s e -> reader ((PriDef s e) : env) xs
        _          -> do
                         let res = eval x env
                         putStrLn $ show res
-                        repl env xs
+                        reader env xs
                         return env
-repl env _ = do return env
+reader env _ = do return env
 
-loadFile fname env = do
+load fname env = do
   h <- openFile fname ReadMode
   str <- hGetContents h
   let ast = primer (alexScanTokens str)
-  ext <- repl env ast
+  ext <- reader env ast
   return ext
 
---main = do
---  inStr <- getContents
---  let ast = primer (alexScanTokens inStr)
---  repl defs ast
+repl env = do
+  inStr <- getLine
+  let ast = primer (alexScanTokens inStr)
+  ext <- reader env ast
+  repl ext
 
 main = do
-  ext <- loadFile "Library.pri" topLevel
-  (fname:_) <- getArgs
-  loadFile fname ext
+  ext <- load "Library.pri" topLevel
+  args <- getArgs
+  case args of
+       (fname:_) -> load fname ext
+       []        -> repl ext

@@ -56,7 +56,8 @@ ident                   { TIdent $$ }
 "length"		        { TLength }
 
 %nonassoc "else"
-%left '=' "let" '(' ')' "not" '~'
+%left '(' ')'
+%left '=' "let" "not" '~'
 %left "and" "or" "++"
 %left '<' '>' ">=" "<=" "==" "!=" ".."
 %left '+' '-'
@@ -72,7 +73,8 @@ Expression                                            { [$1] }
 | Expression Program                                  { $1 : $2 }
 
 Expression :
-integer                                               { PriInteger $1 }
+ '(' Expression ')'                                   { $2 }
+| integer                                             { PriInteger $1 }
 | float                                               { PriDecimal $1 }
 | char                                                { PriChar $1 }
 | "true"                                              { PriBoolean True }
