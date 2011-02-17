@@ -4,7 +4,7 @@ import List
 import Char
 import System.IO
 import System.Environment
-import System.Exit
+import Data.Maybe
 import Types
 import Scanner
 import Parser
@@ -195,8 +195,13 @@ repl env = do
   ext <- reader env ast
   repl ext
 
+getLibraryPath env = do
+  ext <- catch (getEnv "PRIMER_LIBRARY_PATH" >>= \s -> load s env)
+               (\e -> return env)
+  return ext
+
 main = do
-  ext <- load "Library.pri" topLevel
+  ext <- getLibraryPath topLevel
   args <- getArgs
   case args of
        (fname:_) -> load fname ext
