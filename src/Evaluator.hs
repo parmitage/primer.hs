@@ -150,6 +150,8 @@ eval exp@(PriError s) env               = exp
 eval exp@(PriType t) env                = exp
 
 apply (PriClosure p b ce) args env      = eval b (bind p args ce)
+apply _ _ _                             = PriError("attempt to apply non closure")
+
 evlis lst env                           = map (\exp -> eval exp env) lst
 plet sym exp1 exp2 env                  = eval exp2 (bind [sym] [exp1] env)
 
