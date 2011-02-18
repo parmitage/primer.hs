@@ -99,7 +99,10 @@ len (PriList xs)                        = PriInt(length xs)
 len (PriString s)                       = PriInt(length s)
 len _                                   = PriError("type mismatch")
 
-at (PriList xs) (PriInt i)              = xs!!i
+at (PriList xs) (PriInt i) | i < 0      = PriError("negative index")
+                           | i < l      = xs!!i
+                           | otherwise  = PriError("index out of bounds")
+  where l = length xs
 at _ _                                  = PriError("type mismatch")
 
 cast (PriInt i) (PriType TDecimal)      = PriFloat(fromIntegral  i)

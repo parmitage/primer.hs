@@ -57,6 +57,7 @@ ident                   { TIdent $$ }
 "length"                { TLength }
 "as"                    { TAs }
 "is"                    { TIs }
+"at"                    { TAt }
 
 %nonassoc "else"
 %left '(' ')'
@@ -65,7 +66,7 @@ ident                   { TIdent $$ }
 %left '<' '>' ">=" "<=" "==" "!=" ".."
 %left '+' '-'
 %left '*' '/' "mod" "at" "as" "is"
-%left '&' '|' '~' "<<" ">>"
+%left '&' '|' '~' '^' "<<" ">>"
 %right "::"
 %nonassoc UMINUS
 
@@ -120,6 +121,7 @@ Expression :
 | '[' List ']'                                        { PriList $2 }
 | Expression "as" Expression                          { PriCast $1 $3 }
 | Expression "is" Expression                          { PriIs $1 $3 }
+| Expression "at" Expression                          { PriAt $1 $3 }
 
 Identifier :
 ident                                                 { PriSymbol $1 }
