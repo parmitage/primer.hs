@@ -3,8 +3,9 @@ module Types where
 import List
 
 data Typename = TInt | TDecimal | TChar | TBool | TList | TString | TLambda
-data Uniop = Not | Neg
+data Uniop = Not | Neg | BNot
 data Binop = Add | Sub | Mul | Div | Mod | Eq | Ne | Lt | Gt | Gte | Lte | And | Or | App | Rge | Cons
+data Bitop = BAnd | BOr | Xor | LShift | RShift
 
 data Expression =
     PriSymbol String
@@ -22,6 +23,7 @@ data Expression =
   | PriApply Expression [Expression]
   | PriBinop Binop Expression Expression
   | PriUniop Uniop Expression
+  | PriBitop Bitop Expression Expression
   | PriHead Expression
   | PriTail Expression
   | PriLength Expression

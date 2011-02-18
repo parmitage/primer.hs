@@ -43,6 +43,8 @@ ident                   { TIdent $$ }
 '&'                     { TBAnd }
 '|'                     { TBOr }
 '^'                     { TBXor }
+"<<"                    { TBLShift }
+">>"                    { TBRShift }
 '('                     { TLParen }
 ')'                     { TRParen }
 '['                     { TLSquare }
@@ -88,23 +90,28 @@ Expression :
 | Identifier '(' List ')'                             { PriApply $1 $3 }
 | "if" Expression "then" Expression "else" Expression { PriIf $2 $4 $6 }
 | Expression "::" Expression                          { PriBinop Cons $1 $3 }
-| Expression '+' Expression                           { PriBinop Add $1 $3}
-| Expression '-' Expression                           { PriBinop Sub $1 $3}
-| Expression '*' Expression                           { PriBinop Mul $1 $3}
-| Expression '/' Expression                           { PriBinop Div $1 $3}
-
-| Expression '<' Expression                           { PriBinop Lt $1 $3}
-| Expression '>' Expression                           { PriBinop Gt $1 $3}
-| Expression "<=" Expression                          { PriBinop Lte $1 $3}
-| Expression ">=" Expression                          { PriBinop Gte $1 $3}
-| Expression "==" Expression                          { PriBinop Eq $1 $3}
-| Expression "!=" Expression                          { PriBinop Ne $1 $3}
-| Expression "and" Expression                         { PriBinop And $1 $3}
-| Expression "or" Expression                          { PriBinop Or $1 $3}
+| Expression '+' Expression                           { PriBinop Add $1 $3 }
+| Expression '-' Expression                           { PriBinop Sub $1 $3 }
+| Expression '*' Expression                           { PriBinop Mul $1 $3 }
+| Expression '/' Expression                           { PriBinop Div $1 $3 }
+| Expression '&' Expression                           { PriBitop BAnd $1 $3 }
+| Expression '|' Expression                           { PriBitop BOr $1 $3 }
+| Expression '^' Expression                           { PriBitop Xor $1 $3 }
+| '~' Expression                                      { PriUniop BNot $2 }
+| Expression "<<" Expression                          { PriBitop LShift $1 $3 }
+| Expression ">>" Expression                          { PriBitop RShift $1 $3 }
+| Expression '<' Expression                           { PriBinop Lt $1 $3 }
+| Expression '>' Expression                           { PriBinop Gt $1 $3 }
+| Expression "<=" Expression                          { PriBinop Lte $1 $3 }
+| Expression ">=" Expression                          { PriBinop Gte $1 $3 }
+| Expression "==" Expression                          { PriBinop Eq $1 $3 }
+| Expression "!=" Expression                          { PriBinop Ne $1 $3 }
+| Expression "and" Expression                         { PriBinop And $1 $3 }
+| Expression "or" Expression                          { PriBinop Or $1 $3 }
 | "not" Expression                                    { PriUniop Not $2 }
-| Expression "mod" Expression                         { PriBinop Mod $1 $3}
-| Expression "++" Expression                          { PriBinop App $1 $3}
-| Expression ".." Expression                          { PriBinop Rge $1 $3}
+| Expression "mod" Expression                         { PriBinop Mod $1 $3 }
+| Expression "++" Expression                          { PriBinop App $1 $3 }
+| Expression ".." Expression                          { PriBinop Rge $1 $3 }
 | "head" '(' Expression ')'                           { PriHead $3 }
 | "tail" '(' Expression ')'                           { PriTail $3 }
 | "show" '(' Expression ')'                           { PriShow $3 }

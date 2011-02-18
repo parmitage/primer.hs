@@ -2,6 +2,7 @@ module Evaluator where
 
 import List
 import Char
+import Data.Bits
 import Types
 
 definitionEq sym (PriDef s d) = sym == s
@@ -30,6 +31,7 @@ bind params args env =
 uniOp Not (PriBool x)                   = PriBool (not x)
 uniOp Neg (PriInt x)                    = PriInt (negate x)
 uniOp Neg (PriFloat x)                  = PriFloat (negate x)
+uniOp BNot (PriInt x)                   = PriInt(complement x)
 uniOp _ _                               = PriError("type mismatch")
 
 binOp Eq x y                            = PriBool(x == y)
@@ -75,6 +77,13 @@ binOp Rge (PriInt x) (PriInt y)         = PriList(map (\a -> PriInt(a)) [x..y])
 binOp Cons lhs (PriList xs)             = PriList(lhs : xs)
 binOp Cons (PriChar c) (PriString s)    = PriString(c : s)
 binOp _ _ _                             = PriError("type mismatch")
+
+bitOp BAnd (PriInt x) (PriInt y)        = PriInt(x .&. y)
+bitOp BOr (PriInt x) (PriInt y)         = PriInt(x .|. y)
+bitOp Xor (PriInt x) (PriInt y)         = PriInt(x `xor` y)
+bitOp LShift (PriInt x) (PriInt y)      = PriInt(x `shiftL` y)
+bitOp RShift (PriInt x) (PriInt y)      = PriInt(x `shiftR` y)
+bitOp _ _ _                             = PriError("type mismatch")
 
 car (PriList (x:_))                     = x
 car (PriList [])                        = PriList []
@@ -140,6 +149,7 @@ eval (PriLambda p b) env                = (PriClosure p b env)
 eval (PriApply s a) env                 = apply (eval s env) (evlis a env) env
 eval (PriUniop o arg) env               = uniOp o (eval arg env)
 eval (PriBinop o lhs rhs) env           = binOp o (eval lhs env) (eval rhs env)
+eval (PriBitop o lhs rhs) env           = bitOp o (eval lhs env) (eval rhs env)
 eval (PriHead e) env                    = car (eval e env)
 eval (PriTail e) env                    = cdr (eval e env)
 eval (PriLength e) env                  = len (eval e env)
