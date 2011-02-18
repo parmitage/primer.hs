@@ -44,7 +44,7 @@ loadStandardLib env = do
                    putStrLn "  environment variable PRIMER_LIBRARY_PATH is   "
                    putStrLn "  pointing to Library.pri file                  "
                    putStrLn "------------------------------------------------"
-                   return env)
+                   exitFailure)
   return ext
 
 main = do
