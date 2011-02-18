@@ -1,7 +1,6 @@
 {
 module Parser where
-      
-import Scanner
+
 import Types
 }
 

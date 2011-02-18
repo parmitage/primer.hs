@@ -2,6 +2,7 @@ module Main (main) where
 
 import System.IO
 import System.Environment
+import System.Exit
 import Types
 import Scanner
 import Parser
@@ -29,7 +30,9 @@ fromFile fname env = do
   return ext
 
 fromUser env = do
-  str <- getLine
+  putStr "> "
+  hFlush stdout
+  str <- catch getLine (\e -> exitSuccess)
   ext <- readInput str env
   fromUser ext
 

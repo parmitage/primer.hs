@@ -1,5 +1,7 @@
 {
 module Scanner where
+
+import Types
 }
 
 %wrapper "basic"
@@ -63,58 +65,3 @@ tokens :-
   @float                        { \s -> TFloatLiteral (read s) }
   $digit+		                { \s -> TIntLiteral (read s) }
   $alpha[$alpha $digit \_ \']*	{ \s -> TIdent s }
-
-{
-data Token =
-     TAppend                 |
-     TPlus                   |
-     TMinus                  |
-     TTimes                  |
-     TDivide                 |
-     TLParen                 |
-     TRParen                 |
-     TLSquare                |
-     TRSquare                |
-     TDef                    |
-     TNot                    |
-     TLt                     |
-     TGt                     |
-     TGe                     |
-     TLe                     |
-     TEq                     |
-     TNe                     |
-     TAnd                    |
-     TOr                     |
-     TRange                  |
-     TMod                    |
-     TComma                  |
-     TBAnd                   |
-     TBOr                    |
-     TBXor                   |
-     TBNot                   |
-     TBLShift                |
-     TBRShift                |
-     TIf                     |
-     TThen                   |
-     TElse                   |
-     TLet                    |
-     TFn                     |
-     TTrue                   |
-     TFalse                  |
-     TIs                     |
-     TAs                     |
-     TAt                     |
-     TCons                   |
-     THead                   |
-     TTail                   |
-     TShow                   |
-     TRnd                    |
-     TType                   |
-     TLength                 |
-     TStringLiteral String   |
-     TCharLiteral Char       |
-     TIntLiteral Int         |
-     TFloatLiteral Float     |
-     TIdent String
-	deriving (Eq,Show)
-}

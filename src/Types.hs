@@ -58,3 +58,56 @@ instance Eq Expression where
    (PriList (x:xs)) == (PriList (y:ys)) = (x == y) && ((PriList xs) == (PriList ys))
    (PriList [])     == (PriList [])     = True
    _                == _                = False
+
+data Token =
+     TAppend                 |
+     TPlus                   |
+     TMinus                  |
+     TTimes                  |
+     TDivide                 |
+     TLParen                 |
+     TRParen                 |
+     TLSquare                |
+     TRSquare                |
+     TDef                    |
+     TNot                    |
+     TLt                     |
+     TGt                     |
+     TGe                     |
+     TLe                     |
+     TEq                     |
+     TNe                     |
+     TAnd                    |
+     TOr                     |
+     TRange                  |
+     TMod                    |
+     TComma                  |
+     TBAnd                   |
+     TBOr                    |
+     TBXor                   |
+     TBNot                   |
+     TBLShift                |
+     TBRShift                |
+     TIf                     |
+     TThen                   |
+     TElse                   |
+     TLet                    |
+     TFn                     |
+     TTrue                   |
+     TFalse                  |
+     TIs                     |
+     TAs                     |
+     TAt                     |
+     TCons                   |
+     THead                   |
+     TTail                   |
+     TShow                   |
+     TRnd                    |
+     TType                   |
+     TLength                 |
+     TStringLiteral String   |
+     TCharLiteral Char       |
+     TIntLiteral Int         |
+     TFloatLiteral Float     |
+     TIdent String
+     deriving (Eq,Show)
