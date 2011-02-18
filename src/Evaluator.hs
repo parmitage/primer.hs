@@ -87,11 +87,13 @@ bitOp _ _ _                             = PriError("type mismatch")
 
 car (PriList (x:_))                     = x
 car (PriList [])                        = PriList []
+car (PriString [])                      = PriList []
 car (PriString s)                       = PriChar(s !! 0)
 car _                                   = PriError("type mismatch")
 
 cdr (PriList (_:xs))                    = PriList(xs)
 cdr (PriList [])                        = PriList []
+cdr (PriString [])                      = PriList []
 cdr (PriString (_:xs))                  = PriString(xs)
 cdr _                                   = PriError("type mismatch")
 

@@ -8,8 +8,9 @@ import Types
 
 $digit = 0-9
 $alpha = [a-zA-Z]
-@string = \" $alpha* \"
-@char = \' $alpha \'
+$alphanum = [a-zA-Z0-9]
+@string = \" $alphanum* \"
+@char = \' $alphanum \'
 @float = $digit+ \. $digit+
 @comment = \#*.*\n
 
