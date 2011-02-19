@@ -9,10 +9,10 @@ import Types
 $digit = 0-9
 $alpha = [a-zA-Z]
 $alphanum = [a-zA-Z0-9]
-@string = \" $alphanum* \"
-@char = \' $alphanum \'
+$any = [^ \t \n]
+@string = \" $any* \"
+@char = \' $any \'
 @float = $digit+ \. $digit+
-@comment = \#*.*\n
 
 tokens :-
 
@@ -61,6 +61,7 @@ tokens :-
   "show"                        { \s -> TShow }
   "type"                        { \s -> TType }
   "length"		                { \s -> TLength }
+  "#" $any* \n?                 ;
   @string 	       	            { \s -> TStringLiteral (init (tail s)) }
   @char                         { \s -> TCharLiteral (head (init (tail s))) }
   @float                        { \s -> TFloatLiteral (read s) }

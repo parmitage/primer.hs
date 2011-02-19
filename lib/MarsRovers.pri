@@ -1,3 +1,28 @@
+##############################################################################
+# A robotic rover is to be landed by NASA on a rectangular plateau of Mars.
+# The rover must navigate the plateau using a set of commands sent from Earth.
+# The plateau is divided into a grid to simplify navigation.
+# 
+# A rovers position is represented by a combination of an x and y co-ordinate
+# and a letter representing one of the four cardinal compass points. An example
+# position on the grid might be [0,0,N] which means the rover is in the bottom
+# left corner and facing North. Assume that the square directly North from
+# (x, y) is (x, y+1).
+# 
+# The input to the rover is via two functions:
+# 
+# position(x, y, h) deploys the rover to an initial grid location [x,y,h]
+# 
+# move(s) accepts a command string of the form "L1R2". L spins the rover 90
+# degrees left, R spins the rover 90 degrees right and a number moves the rover
+# by the appropriate number of grid points in the direction it is currently
+# facing. The command string can be of any reasonable length.
+# 
+# Test your program by starting in an initial position [10,10,N] and then
+# issuing the command "R1R3L2L1". The output from the program should be the
+# final grid location and heading of the rover.
+##############################################################################
+
 w = 0
 s = 1
 e = 2
