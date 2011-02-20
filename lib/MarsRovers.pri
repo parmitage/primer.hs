@@ -34,9 +34,9 @@ roverY = fn (r) r at 1
 roverH = fn (r) r at 2
 
 print = fn (r)
-   let x = roverX(r)
-   let y = roverY(r)
-   let d = ['W', 'S', 'E', 'N'] at roverH(r)
+   let x = roverX(r) in
+   let y = roverY(r) in
+   let d = ['W', 'S', 'E', 'N'] at roverH(r) in
    [x, y, d]
 
 navigate = fn (r, s) foldl(move, r, s)

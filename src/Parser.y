@@ -18,6 +18,7 @@ char                    { TCharLiteral $$ }
 string                  { TStringLiteral $$ }
 ident                   { TIdent $$ }
 "let"                   { TLet }
+"in"                    { TIn }
 "fn"                    { TFn }
 "if"                    { TIf }
 "then"                  { TThen }
@@ -61,7 +62,7 @@ ident                   { TIdent $$ }
 
 %nonassoc "else"
 %left '(' ')'
-%left '=' "let" "not" '~'
+%left '=' "let" "in" "not" '~'
 %left "and" "or" "++"
 %left '<' '>' ">=" "<=" "==" "!=" ".."
 %left '+' '-'
@@ -85,7 +86,7 @@ Expression :
 | "false"                                             { PriBool False }
 | string                                              { PriString $1 }
 | Identifier                                          { $1 }
-| "let" Identifier '=' Expression Expression          { PriLet $2 $4 $5 }
+| "let" Identifier '=' Expression "in" Expression     { PriLet $2 $4 $6 }
 | Identifier '=' Expression                           { PriVal $1 $3 }
 | "fn" '(' List ')' Expression                        { PriLambda $3 $5 }
 | Identifier '(' List ')'                             { PriApply $1 $3 }

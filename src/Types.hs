@@ -94,6 +94,7 @@ data Token =
      TThen                   |
      TElse                   |
      TLet                    |
+     TIn                     |
      TFn                     |
      TTrue                   |
      TFalse                  |

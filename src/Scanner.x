@@ -49,6 +49,7 @@ tokens :-
   "then"                        { \s -> TThen }
   "else"		                { \s -> TElse }
   "let"                         { \s -> TLet }
+  "in"                          { \s -> TIn }
   "fn"                          { \s -> TFn }
   "true"		                { \s -> TTrue }
   "false"		                { \s -> TFalse }

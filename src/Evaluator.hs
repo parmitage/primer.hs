@@ -149,7 +149,6 @@ eval exp@(PriList l) env                = if isPrimitive exp
 
 eval exp@(PriIf _ _ _) env              = condition exp env
 eval (PriLet s e1 e2) env               = plet s e1 e2 env
-eval (PriVal _ e) env                   = eval e env
 eval (PriLambda p b) env                = (PriClosure p b env)
 eval (PriApply s a) env                 = apply (eval s env) (evlis a env) env
 eval (PriUniop o arg) env               = uniOp o (eval arg env)

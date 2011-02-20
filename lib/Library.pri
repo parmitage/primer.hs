@@ -3,14 +3,14 @@ reverse = fn (xs)
       if head(xs) != []
       then inner(tail(xs), head(xs) :: accum)
       else accum
-   inner(xs, [])
+   in inner(xs, [])
 
 map = fn (f, xs)
    let inner = fn (xs, accum)
       if head(xs) != []
       then inner(tail(xs), f(head(xs)) :: accum)
       else reverse(accum)
-   inner(xs, [])
+   in inner(xs, [])
 
 foldl = fn (f, init, xs)
    if head(xs) != []
